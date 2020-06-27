@@ -5,7 +5,7 @@ import win32api
 import time
 
 
-def open_login_window(password, cert_password, secs=60):
+def open_login_window(path, password, cert_password, secs=60):
     """
     OpenAPI+를 사용해서 로그인 윈도우를 실행한 후 로그인을 시도하는 함수
     :param password: 비밀번호
@@ -13,7 +13,8 @@ def open_login_window(password, cert_password, secs=60):
     :param secs: 로그인 완료까지 대기할 시간
     :return:
     """
-    cmd = "c:/Anaconda3/python.exe login.py"
+    # 로그인 윈도우를 실행
+    cmd = f"{path} login.py"
     subprocess.Popen(cmd, shell=True)
     time.sleep(5)
 
@@ -77,9 +78,11 @@ def set_auto_on(password):
     checkbox = win32gui.GetDlgItem(hwnd, 0xCD)
     checked = win32gui.SendMessage(checkbox, win32con.BM_GETCHECK)
     if not checked:
-        win32gui.SendMessage(checkbox, win32con.BM_SETCHECK, 0)
+        click_button(checkbox)
+        #win32gui.SendMessage(checkbox, win32con.BM_SETCHECK, 0)
 
     # 닫기 버튼 클릭
+    time.sleep(2)
     button= win32gui.GetDlgItem(hwnd, 0x01)
     click_button(button)
 
@@ -91,10 +94,13 @@ def set_auto_off():
         # 체크박스 해제
         checkbox = win32gui.GetDlgItem(hwnd, 0xCD)
         checked = win32gui.SendMessage(checkbox, win32con.BM_GETCHECK)
+
         if checked:
-            win32gui.SendMessage(checkbox, win32con.BM_SETCHECK, 0)
+            click_button(checkbox)
+            #win32gui.SendMessage(checkbox, win32con.BM_SETCHECK, 0)
 
         # 닫기 버튼 클릭
+        time.sleep(2)
         button= win32gui.GetDlgItem(hwnd, 0x01)
         click_button(button)
     except:
@@ -102,6 +108,7 @@ def set_auto_off():
 
     print("auto 해제 후 대기 중")
     time.sleep(5)
+
 
 def try_manual_login(password, cert_password):
     hwnd = find_window("Open API Login")
@@ -158,27 +165,36 @@ def close_login_window():
 
 
 if __name__ == "__main__":
-    # 비밀번호
-    password = ""
-    cert_password = ""
-    password2 = ""
+    f = open("user.txt")
+    lines = f.readlines()
+    path = lines[0].strip()
+    password = lines[1].strip()
+    cert_password = lines[2].strip()
+    password2 = lines[3].strip()
 
-    # 로그인 -> Auto 해제 -> 창닫기
-    open_login_window(password, cert_password)
+    print("========== 1. 로그인 ==========")
+    open_login_window(path, password, cert_password)
+
+    print("========== 2. 자동 로그인 해제 ==========")
     set_auto_off()
     close_login_window()
 
-    # 로그인
-    open_login_window(password, cert_password)
+    print("========== 3. 로그인 ==========")
+    open_login_window(path, password, cert_password)
     close_login_window()
 
     # 버전처리 수행
+    print("========== 4. 버전처리 ==========")
     execute_version_process()
 
-    # 로그인 -> Auto 재등록 -> 창닫기
-    open_login_window(password, cert_password)
+    print("========== 5. 로그인 ==========")
+    open_login_window(path, password, cert_password)
+
+    print("========== 6. 자동 로그인 설정 ==========")
     set_auto_on(password2)
     close_login_window()
+
+    print("========== 자동 버전처리 완료 ==========")
 
 
 
