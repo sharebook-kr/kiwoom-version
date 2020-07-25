@@ -12,17 +12,16 @@ class MyWindow(QMainWindow):
         self.ocx.OnEventConnect.connect(self._handler_login)
 
         # login
-        self.ocx.dynamicCall("CommConnect()")
-        self.login_loop = QEventLoop()
-        self.login_loop.exec()
+        # 10초후에 로그인 실행
+        QTimer.singleShot(10, self.CommConnect)
 
-        self.ocx.dynamicCall("KOA_Functions(QString, QString)", "ShowAccountWindow", "")
+
+    def CommConnect(self):
+        self.ocx.dynamicCall("CommConnect()")
+
 
     def _handler_login(self):
-        try:
-            self.login_loop.exit()
-        except:
-            pass
+        self.ocx.dynamicCall("KOA_Functions(QString, QString)", "ShowAccountWindow", "")
 
 
 if __name__ == "__main__":

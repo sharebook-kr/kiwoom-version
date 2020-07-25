@@ -142,12 +142,16 @@ def close_window(title, secs=5):
     hwnd = find_window(title)
     if hwnd !=0:
         win32gui.PostMessage(hwnd, win32con.WM_CLOSE, 0, 0)
+        print("{} secs sleep ...".format(secs))
         time.sleep(secs)
 
 
 def execute_version_process():
     try:
-        close_window("opstarter", secs=120)         # 버전처리 메시지 창이 있는 경우 120초 대기
+        print("버전처라 창 닫기")
+        close_window("opstarter", secs=30)         # 버전처리 메시지 창이 있는 경우 120초 대기
+
+        print("업그레이드 확인창 닫기")
         close_window("업그레이드 확인")
     except:
         pass
@@ -180,7 +184,7 @@ if __name__ == "__main__":
     close_login_window()
 
     print("========== 3. 로그인 ==========")
-    open_login_window(path, password, cert_password)
+    open_login_window(path, password, cert_password, secs=50)
     close_login_window()
 
     # 버전처리 수행
@@ -188,14 +192,13 @@ if __name__ == "__main__":
     execute_version_process()
 
     print("========== 5. 로그인 ==========")
-    open_login_window(path, password, cert_password)
+    open_login_window(path, password, cert_password, secs=50)
 
     print("========== 6. 자동 로그인 설정 ==========")
     set_auto_on(password2)
     close_login_window()
 
     print("========== 자동 버전처리 완료 ==========")
-
 
 
 
