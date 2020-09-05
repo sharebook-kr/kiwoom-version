@@ -7,21 +7,19 @@ from PyQt5.QAxContainer import *
 class MyWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setGeometry(300, 300, 400, 400)
         self.setWindowTitle("Python 로그인")
         self.ocx = QAxWidget("KHOPENAPI.KHOpenAPICtrl.1")
         self.ocx.OnEventConnect.connect(self._handler_login)
-
-        # login
-        # 10초후에 로그인 실행
-        QTimer.singleShot(10, self.CommConnect)
-
+        QTimer.singleShot(2 * 1000, self.CommConnect)
 
     def CommConnect(self):
         self.ocx.dynamicCall("CommConnect()")
 
-
-    def _handler_login(self):
-        self.ocx.dynamicCall("KOA_Functions(QString, QString)", "ShowAccountWindow", "")
+    def _handler_login(self, err_code):
+        if err_code == 0:
+            print("키움 로그인 완료")
+            QApplication.instance().quit()
 
 
 if __name__ == "__main__":
@@ -29,4 +27,3 @@ if __name__ == "__main__":
     win = MyWindow()
     win.show()
     app.exec_()
-

@@ -1,4 +1,5 @@
 C:/Anaconda3/python.exe
+id
 password
-cert_pass
-0000
+cert_password
+password2
