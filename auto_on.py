@@ -7,11 +7,10 @@ from PyQt5 import QtTest
 
 f = open("user.txt")
 lines = f.readlines()
-PATH = lines[0].strip()
-USER_ID = lines[1].strip()
-USER_PW = lines[2].strip()
-USER_CR = lines[3].strip()
-USER_PW2 = lines[4].strip()
+USER_ID  = lines[0].strip()
+USER_PW  = lines[1].strip()
+USER_CR  = lines[2].strip()
+USER_PW2 = lines[3].strip()
 f.close()
 
 

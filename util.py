@@ -42,9 +42,9 @@ def close_window(title, secs=5):
         print("{} secs sleep ...".format(secs))
         time.sleep(secs)
 
-def wait_secs(secs=10):
+def wait_secs(msg, secs=10):
     while secs > 0:
         time.sleep(1)
-        print(f"waiting: {secs}")
+        print(f"{msg} waiting: {secs}")
         secs = secs - 1
 

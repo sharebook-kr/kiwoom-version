@@ -1,6 +1,9 @@
+import os
+import os.path
 import subprocess
-import time
 from util import *
+import time
+
 
 def manual_login(user_id, user_pw, user_cert):
     print("수동 로그인 함수 호출")
@@ -14,6 +17,7 @@ def manual_login(user_id, user_pw, user_cert):
     enter_keys(edit_pass, user_pw)
     enter_keys(edit_cert, user_cert)
     click_button(button)
+
 
 def check_version():
     try:
@@ -36,33 +40,39 @@ def check_upgrade():
     except:
         pass
 
+
 if __name__ == "__main__":
     f = open("user.txt")
     lines = f.readlines()
-    python_path = lines[0].strip()
-    user_id = lines[1].strip()
-    user_pw = lines[2].strip()
-    user_cert = lines[3].strip()
-    user_pw2 = lines[4].strip()
+    user_id   = lines[0].strip()
+    user_pw   = lines[1].strip()
+    user_cert = lines[2].strip()
+    user_pw2  = lines[3].strip()
     f.close()
 
-    # 로그인 창 실행
-    proc = subprocess.Popen(f"{python_path} login.py", shell=True)
-    wait_secs(10)
+    # 자동 로그인 파일 삭제 
+    login_info = "C:/OpenAPI/system/Autologin.dat"
+    if os.path.isfile(login_info):
+        os.remove("C:/OpenAPI/system/Autologin.dat")
+
+    # 버전처리
+    proc = subprocess.Popen("login/KiwoomAPI.exe", shell=True)
+    wait_secs("버전처리", 5)
 
     # 수동 로그인 
     manual_login(user_id, user_pw, user_cert)
-    wait_secs(60)
+    wait_secs("로그인", 90)
 
-    # 로그인 창 당기 
+    # 프로그램 종료
     proc.kill()
-    close_window("Python 로그인", secs=10)
-    close_window("Open API Login")
+    close_window("Kiwoom Login", secs=10)
 
     # check version
     check_version()
-    wait_secs(20)
+    wait_secs("버전처리", 20)
 
     # check upgrade 
     check_upgrade()
-    wait_secs(60)
+    wait_secs("업그레이드", 10)
+
+
