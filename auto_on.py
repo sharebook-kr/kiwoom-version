@@ -4,8 +4,11 @@ from PyQt5.QtCore import *
 from PyQt5.QAxContainer import *
 from util import *
 from PyQt5 import QtTest
+import os 
 
-f = open("user.txt")
+CUR_PATH = os.getcwd()
+
+f = open(f"{CUR_PATH}/user.txt")
 lines = f.readlines()
 USER_ID  = lines[0].strip()
 USER_PW  = lines[1].strip()
