@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
     # 버전처리
     proc = subprocess.Popen("login/KiwoomAPI.exe", shell=True)
-    wait_secs("버전처리", 5)
+    wait_secs("버전처리", 10)
 
     # 수동 로그인 
     manual_login(user_id, user_pw, user_cert)
