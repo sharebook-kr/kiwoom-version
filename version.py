@@ -3,6 +3,9 @@ import os.path
 import subprocess
 from util import *
 import time
+import os 
+
+CUR_PATH = os.getcwd()
 
 
 def manual_login(user_id, user_pw, user_cert):
@@ -56,7 +59,7 @@ if __name__ == "__main__":
         os.remove("C:/OpenAPI/system/Autologin.dat")
 
     # 버전처리
-    proc = subprocess.Popen("login/KiwoomAPI.exe", shell=True)
+    proc = subprocess.Popen(f"{CUR_PATH}/login/KiwoomAPI.exe", shell=True)
     wait_secs("버전처리", 5)
 
     # 수동 로그인 
