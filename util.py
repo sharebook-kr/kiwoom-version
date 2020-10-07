@@ -21,15 +21,17 @@ def find_window(caption):
                 break
     return hwnd
 
-def enter_keys(hwnd, password):
-    win32gui.SetForegroundWindow(hwnd)
-    win32api.Sleep(100)
-
-    for c in password:
-        win32api.SendMessage(hwnd, win32con.WM_CHAR, ord(c), 0)
-        win32api.Sleep(100)
+def enter_keys(hwnd, data):
+    win32api.SendMessage(hwnd, win32con.EM_SETSEL, 0, -1) 
+    win32api.SendMessage(hwnd, win32con.EM_REPLACESEL, 0, data) 
+    #win32gui.SetForegroundWindow(hwnd)
+    #win32api.Sleep(100)
+    #for c in password:
+    #    win32api.SendMessage(hwnd, win32con.WM_CHAR, ord(c), 0)
+    #    win32api.Sleep(100)
 
 def click_button(btn_hwnd):
+    #win32api.SendMessage(btn_hwnd, win32con.BM_CLICK, 0, 0)
     win32api.PostMessage(btn_hwnd, win32con.WM_LBUTTONDOWN, 0, 0)
     win32api.Sleep(100)
     win32api.PostMessage(btn_hwnd, win32con.WM_LBUTTONUP, 0, 0)
