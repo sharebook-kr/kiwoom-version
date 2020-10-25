@@ -55,18 +55,16 @@ class MyWindow(QMainWindow):
             hwnd = find_window("계좌비밀번호")
             if hwnd != 0:
                 # 비밀번호등록
-                edit = win32gui.GetDlgItem(hwnd, 0xCA)
-
+                edit = win32gui.GetDlgItem(hwnd, 0xCC)
                 win32gui.SendMessage(edit, win32con.WM_SETTEXT, 0, USER_PW2)
-                #enter_keys(edit, USER_PW2)
-                print(edit, "enter password")
 
+                # 전체계좌에 등록
                 win32api.Sleep(100)
-                button_register_all = win32gui.GetDlgItem(hwnd, 0xCE)
+                button_register_all = win32gui.GetDlgItem(hwnd, 0xD4)
                 click_button(button_register_all)
 
                 # 체크박스 체크 
-                checkbox = win32gui.GetDlgItem(hwnd, 0xCD)
+                checkbox = win32gui.GetDlgItem(hwnd, 0xD3)
                 checked = win32gui.SendMessage(checkbox, win32con.BM_GETCHECK)
                 if not checked:
                     click_button(checkbox)
